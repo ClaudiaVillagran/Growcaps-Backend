@@ -25,7 +25,7 @@ async function getAllCaps(req, res) {
   try {
     const caps = await Cap.find();
     res.status(200).json({
-      statusbar: "success",
+      status: "success",
       caps,
     });
   } catch (error) {

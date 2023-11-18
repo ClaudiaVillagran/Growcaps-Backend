@@ -1,5 +1,5 @@
 const express = require('express');
-const sale = require('../Controllers/sale');
+const sale = require('../Controllers/Sale');
 const api = express.Router();
 
 api.post('/register', sale.createSale);

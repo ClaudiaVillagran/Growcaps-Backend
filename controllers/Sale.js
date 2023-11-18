@@ -2,19 +2,16 @@ const Sale = require("../models/Sale");
 const Cap = require("../models/Cap");
 
 async function createSale(req, res) {
-  const { date, quantity, capId } = req.body;
-  console.log(date, quantity, capId)
-  const cap = await Cap.findById(capId);
-  console.log(cap);
-  if (!cap) {
-    return res.status(404).json({ error: 'Gorra no encontrada' });
-  }
+  const { date, quantity, typeSale, total, nameClient, numberClient } = req.body;
   try {
     
     const sale = new Sale({
       date,
       quantity,
-      cap: cap._id,
+      typeSale,
+      total,
+      nameClient,
+      numberClient
     });
     const savedSale = await sale.save();
 
@@ -30,9 +27,9 @@ async function createSale(req, res) {
 
 async function getAllSales(req, res) {
   try {
-    const sale = await Sale.find().populate('cap');
+    const sale = await Sale.find();
     res.status(200).json({
-      statusbar: "success",
+      status: "success",
       sale,
     });
   } catch (error) {
@@ -44,7 +41,7 @@ async function getSaleById(req, res) {
   const saleId = req.params.id;
 
   try {
-    const sale = await Sale.findById(saleId).populate('cap');
+    const sale = await Sale.findById(saleId);
 
     if (!sale) {
       return res.status(404).json({ message: "Venta no encontrado" });
